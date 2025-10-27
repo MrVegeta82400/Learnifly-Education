@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registeration Here</title>
+<!--Bootstrap Cdn Invoke-->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
+	crossorigin="anonymous">
+
+<!--FontAwesome CDN Invoke-->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+	integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+	<!--Header Start-->
+	<div th:replace="~{fragments/navbar :: crm-header}"></div>
+	<!--Header End-->
+
+	<!--Main Content Start-->
+	<main class="container-fluid" style="min-height: 630px;">
+
+		<!--Content-->
+		<section class="container py-5 bg-light">
+			<h5 class="text-center md-4">Registeration Here</h5>
+
+			<!--Outer Container-->
+			<div class="row justify-content-center">
+				<!--Register  Card Start-->
+				<div class="col-lg-5 col-md-6">
+					<form action="regform" method="post"
+						onsubmit="return validform()" th:object="${user}">
+						<div class="card shadow p-5">
+							<div th:if="${succMsg}" class="mb-3 alert alert-success" role="alert">
+                        		<span th:text="${succMsg}"></span>
+							</div>
+							<div class="mb-3">
+								<label class="form-label">Email address</label> <input
+									type="text" class="form-control" name="email" th:field="*{email}"  required />
+									<div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+							</div>
+
+							<div class="mb-3">
+								<label class="form-label">Name :</label> <input type="text"
+									class="form-control" name="name" th:field="*{name}" required />
+									<div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+							</div>
+
+							<div class="mb-3">
+								<label class="form-label">Phone no :</label> <input type="text"
+									class="form-control" name="phoneno" th:field="*{phoneno}" required />
+									<div class="text-danger" th:if="${#fields.hasErrors('phoneno')}" th:errors="*{phoneno}"></div>
+							</div>
+
+							<div class="mb-3">
+								<label class="form-label">City :</label> <input type="text"
+									class="form-control" name="city" th:field="*{city}" required />
+									<div class="text-danger" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></div>
+							</div>
+
+							<div class="mb-3">
+								<label for="exampleInputPassword1" class="form-label">Password
+									:</label> <input type="text" class="form-control" name="password" th:field="*{password}" 
+									required />
+									<div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+							</div>
+							<button type="submit" class="btn btn-success">Register</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!--Register Card End-->
+			<!--Outer Container-->
+		</section>
+	</main>
+	<!--Main Content End-->
+
+	<!--Footer Start-->
+	<div th:replace="~{fragments/footer :: crm-footer}"></div>
+	<!--Footer End-->
+
+	<script type="text/javascript">
+		function validform() {
+			var name = document.forms[0]["name"].value;
+			var namePattern = /^[a-z,A-Z ]{5,25}$/;
+
+			var email = document.forms[0]["email"].value;
+			var emailPattern = /^[a-zA-Z0-9._%+]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/;
+
+			var city = document.forms[0]["city"].value;
+			var cityPattern = /^[a-zA-Z]{3,25}$/;
+
+			var phoneno = document.forms[0]["phoneno"].value;
+			var phonenoPattern = /^[0-9]{10}$/;
+
+			var password = document.forms[0]["password"].value;
+			var passwordPattern = /^[a-z,A-Z,0-9,@]{5,25}$/;
+
+			if (!namePattern.test(name)) {
+				alert("Invalid Name Formate.");
+				return false;
+			} else if (!emailPattern.test(email)) {
+				alert("Invalid Email Formate.");
+				return false;
+			} else if (!cityPattern.test(city)) {
+				alert("Invalid city Formate.");
+				return false;
+			} else if (!phonenoPattern.test(phoneno)) {
+				alert("Invalid phoneno Formate.");
+				return false;
+			} else if (!passwordPattern.test(password)) {
+				alert("Invalid password Formate.");
+				return false;
+			} else {
+				return true;
+			}
+		}
+	</script>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>

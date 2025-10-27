@@ -1,0 +1,20 @@
+ .sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            background-color: black;
+        }
+
+        .sidebar .nav-link {
+            color: white;
+        }
+
+        .sidebar .nav-link:hover {
+            background-color: rgb(63, 59, 59);
+        }
+
+        .content {
+            width: 80%;
+            margin-left: 20%;
+            padding: 30px;
+        }

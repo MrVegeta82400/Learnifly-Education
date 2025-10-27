@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body>
+    <div th:replace="~{fragments/frg-admin-sidebar :: admin-sidebar}"></div>
+
+    <div class="content">
+        <h2>Admin Dashboard</h2>
+        <p>Dashboard contain different graphs and charts showing the different details.</p>
+        
+        <section class="container py-5">
+			<div class="row justify-content-center">
+				<div class="col-lg-6">
+					<div class="card shadow  p-3">
+					 <h4 class="text-center">Today sales revenue Graph.</h4>	
+						<div id="myPlot"></div>
+			    	</div>
+				</div>
+
+				<div class="col-lg-6">
+					<div class="card shadow  p-3">
+				   <h4 class="text-center"> Courses Sold Graph</h4>
+					  	<canvas id="myCircleChart"></canvas>
+			    	</div>
+				</div>
+			</div>
+		</section>
+		
+		<section class="container py-5">
+			<div class="row justify-content-center">
+				<div class="col-lg-12">
+					<div class="card shadow  p-3">
+				    <h4 class="text-center">Graph of Courses Sold / DaY Information</h4>
+					  	<canvas class="mt-3" id="myChart" ></canvas>
+			    	</div>
+				</div>
+			</div>
+		</section>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous">
+    </script>
+    <script th:inline="javascript">
+	function graphOne(){
+		const xValues = /*[[ ${date1} ]]*/ [ ];
+		const yValues = /*[[ ${counts1} ]]*/ [ ];
+
+		var maxYValues = Math.max(...yValues)+2;
+
+		new Chart("myChart", {
+		  type: "line",
+		  data: {
+		    labels: xValues,
+		    datasets: [{
+		      fill: false,
+		      lineTension: 0,
+		      backgroundColor: "rgba(0,0,255,1.0)",
+		      borderColor: "rgba(0,0,255,0.1)",
+		      data: yValues
+		    }]
+		  },
+		  options: {
+		    legend: {display: false},
+		    scales: {
+		      yAxes: [{ticks: {min: 0, max:maxYValues}}],
+		    }
+		  }
+		});
+	}
+	
+	graphOne();
+	
+	function graphTwo(){
+		 
+		var xValues = /*[[ ${date2} ]]*/ [ ];
+		var yValues = /*[[ ${counts2} ]]*/ [ ];
+		
+		function randomly(){
+
+			var letter = "0123456789ABCDEF";
+			var color = "#";
+			
+			for(var i=0; i<6; i++){
+				var randomIndex = Math.floor(Math.random()*16);
+				var randomCharacter = letter[randomIndex];
+				color = color + randomCharacter;
+			}
+		
+			return color;
+		}
+		
+		var barColors = xValues.map(() => randomly());
+
+		new Chart("myCircleChart", {
+		  type: "pie",
+		  data: {
+		    labels: xValues,
+		    datasets: [{
+		      backgroundColor: barColors,
+		      data: yValues
+		    }]
+		  },
+		  options: {
+		    title: {
+		      display: true,
+		      }
+		  }
+		});
+	}
+	
+	graphTwo();
+	
+	function graphThree(){
+
+		const xArray = /*[[${date3}]]*/[];
+		const yArray = /*[[${counts3}]]*/[];
+
+		const data = [{
+		  x:xArray,
+		  y:yArray,
+		  type:"bar"
+		}];
+
+		const layout = { displayModeBar  : false};
+
+		Plotly.newPlot("myPlot", data, layout, {displayModeBar  : false});
+		
+		}
+	
+		graphThree();
+</script>
+</body>
+
+</html>

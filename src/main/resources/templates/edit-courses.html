@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Edit Course</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+	<div th:replace="~{fragments/frg-admin-sidebar :: admin-sidebar}"></div>
+
+	<div class="content">
+		<h2>Course Managements</h2>
+		<p>Edit Courses Below....</p>
+
+		<section class="mt-5">
+			<h3 class="text-center">Edit Course</h3>
+			<div class="row justify-content-center">
+			
+				<div class="card shadow  p-5" style="width: 50%">
+				
+					<form th:action="@{/updateCourseDetailsForm}" method="post" th:object="${newCourse}" enctype="multipart/form-data">
+						<div class="mb-3">
+							<label class="form-label">Course Name</label> <input type="text"
+								th:value="${course.name}" class="form-control" name="name" readonly="readonly" />
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Discounted Price</label> <input
+								type="text" th:value="${course.discounted_price}" class="form-control" name="discounted_price"
+								required />
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Original Price</label> <input
+								type="text" th:value="${course.originalPrice}" class="form-control" name="originalPrice" required />
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Updated On</label> <input type="text"
+								class="form-control" th:value="${course.updatedOn}" name="updatedOn" required />
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Description</label>
+							<textarea type="text" th:text="${course.description}" class="form-control" name="description"
+								required></textarea>
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Image Url</label> <input type="file"
+								class="form-control" name="courseImage"/>
+								<span>Image : </span>
+								<img th:src="@{${course.imageUrlString}}" alt="Course Image" width="150"/>
+						</div>
+						<button type="submit" class="btn btn-success">Edit Course</button>
+					</form>
+				</div>
+			</div>
+		</section>
+	</div>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>
